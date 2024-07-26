@@ -59,7 +59,7 @@ def send_email(price):
 # Main logic to check the price and send an email if needed
 def main():
     price = get_price()
-    if price is not None and price < 500:
+    if price is not None and price < 800:
         send_email(price)
     else:
         print("Price is above the threshold, no email sent.")
