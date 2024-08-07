@@ -10,6 +10,8 @@ COPY ./src/. /app
 # Install any needed packages specified in requirements.txt
 RUN pip install  -r /app/requirements.txt
 
+# Expose port 8000
+EXPOSE 8000
 
 # Run count.py when the container launches
 CMD ["python", "count.py"]
