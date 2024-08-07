@@ -1,6 +1,4 @@
-from telegram.ext import Updater, CommandHandler, Dispatcher, MessageHandler, Filters
-from telegram import Update, Bot
-from flask import Flask, request
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from datetime import datetime
 import os
@@ -18,11 +16,9 @@ user_points = {}
 last_award_date = None
 last_poll_user = None
 last_subpoll_user = None  # Nouvel ajout
-
+print("ta")
 # Dictionnaire pour stocker la date du dernier point attribué par subpoll pour chaque utilisateur
 user_subpoll_date = {}
-
-app = Flask(__name__)
 
 def start(update, context):
     update.message.reply_text('Salut! Utilise /poll pour gagner des points.')
@@ -110,36 +106,21 @@ def help_command(update, context):
     )
     update.message.reply_text(help_message)
 
-def set_webhook(bot):
-    webhook_url = os.environ.get("WEBHOOK_URL")
-    bot.set_webhook(url=webhook_url)
-
-@app.route('/' + os.environ.get("tel_token"), methods=['POST'])
-def webhook():
-    update = Update.de_json(request.get_json(), bot)
-    dispatcher.process_update(update)
-    return 'ok', 200
-
 def main():
-    global bot, dispatcher
-
     # Remplace 'TON_TOKEN_API' par le token de ton bot
-    tel_token = os.environ.get("tel_token")
-    bot = Bot(token=tel_token)
-    dispatcher = Dispatcher(bot, None, workers=0, use_context=True)
+    updater = Updater(os.environ.get("tel_token"), use_context=True)
+    dp = updater.dispatcher
 
     # Handlers
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("poll", poll))
-    dispatcher.add_handler(CommandHandler("subpoll", subpoll))
-    dispatcher.add_handler(CommandHandler("results", results))
-    dispatcher.add_handler(CommandHandler("help", help_command))
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("poll", poll))
+    dp.add_handler(CommandHandler("subpoll", subpoll))
+    dp.add_handler(CommandHandler("results", results))
+    dp.add_handler(CommandHandler("help", help_command))
 
-    set_webhook(bot)
+    # Démarrer le Bot
+    updater.start_polling(poll_interval = 5)
+    updater.idle()
 
 if __name__ == '__main__':
     main()
-
-# Run Flask app
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8000)))
