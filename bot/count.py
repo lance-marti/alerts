@@ -1,6 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from datetime import datetime
+import os
 
 # Activer le logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -107,7 +108,7 @@ def help_command(update, context):
 
 def main():
     # Remplace 'TON_TOKEN_API' par le token de ton bot
-    updater = Updater("", use_context=True)
+    updater = Updater(os.environ.get("tel_token"), use_context=True)
     dp = updater.dispatcher
 
     # Handlers
