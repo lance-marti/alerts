@@ -16,7 +16,7 @@ user_points = {}
 last_award_date = None
 last_poll_user = None
 last_subpoll_user = None  # Nouvel ajout
-
+print("t")
 # Dictionnaire pour stocker la date du dernier point attribué par subpoll pour chaque utilisateur
 user_subpoll_date = {}
 
