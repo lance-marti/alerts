@@ -119,7 +119,7 @@ def main():
     dp.add_handler(CommandHandler("help", help_command))
 
     # Démarrer le Bot
-    updater.start_polling()
+    updater.start_polling(poll_interval = 5)
     updater.idle()
 
 if __name__ == '__main__':
