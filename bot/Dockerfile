@@ -5,13 +5,13 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY ./src/. /app
+COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install  -r /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
-# Expose port 8000
-EXPOSE 8000
+# Expose the default port used by Streamlit
+EXPOSE 8501
 
-# Run count.py when the container launches
-CMD ["python", "count.py"]
+# Run the Streamlit app when the container launches
+CMD ["streamlit", "run", "src/app.py"]
