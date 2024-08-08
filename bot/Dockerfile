@@ -14,4 +14,4 @@ RUN pip install -r /app/requirements.txt
 EXPOSE 8501
 
 # Run the Streamlit app when the container launches
-CMD ["streamlit", "run", "src/app.py"]
+CMD ["sh", "-c", "streamlit run src/app.py ${PORT:+--server.port=$PORT} --server.address=0.0.0.0"]
