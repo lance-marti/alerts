@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 10 * * *' # Runs every day at 10
+    - cron: '0 11 * * *' # Runs every day at 10
 
 jobs:
   scrape-and-notify:
